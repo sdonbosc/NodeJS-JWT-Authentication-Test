@@ -108,12 +108,3 @@ setTimeout(()=>{
     verifytoken()
 }, 190000)
 
-
-      // function onLoad() {
-      //     const token = localStorage.getItem('jwt');
-      //     if (token) {
-      //         getDashboard();
-      //     }
-
-      // }
-      // onLoad();
