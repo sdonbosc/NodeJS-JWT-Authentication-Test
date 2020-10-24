@@ -69,9 +69,8 @@ function getSettings() {
     }).then(res => {
         console.log('getSettings res')
         if (res && res.data && res.data.success) {
-            document.querySelector('h1.row').innerHTML = 'Settings Page';
-            document.getElementById('Success').textContent = "Welcome to Settings Page"
-            loadHomePage()
+            console.log('getSettings res 1')
+            loadSettingsPage()
         }
     }).catch(function (error) {
         document.getElementById('error-message').textContent = "Unauthorized access"
@@ -81,6 +80,18 @@ function getSettings() {
         id: 'settings'
     }, 'Settings', '/api/settings');
 }
+}
+
+function loadSettingsPage() {
+    console.log('loadSettingsPage res 1')
+    axios.get('/settingsPage')
+        .then(res => {
+            console.log('loadSettingsPage res 2')
+            document.querySelector('main').innerHTML = res.data
+        }).catch(function (error) {
+            document.getElementById('error-message').textContent = "Failed to load page"
+            console.log("Error", error);
+        });
 }
 
 const parseJwt = (token) => {

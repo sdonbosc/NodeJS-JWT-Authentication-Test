@@ -88,7 +88,7 @@ app.get('/api/dashboard', jwtMW, (req, res) => {
   });
 });
 
-app.get('/settingPage', (req, res) => {
+app.get('/settingsPage', (req, res) => {
   res.sendFile(path.join(__dirname+'/src/Dashboard/settings.html'));
 });
 
