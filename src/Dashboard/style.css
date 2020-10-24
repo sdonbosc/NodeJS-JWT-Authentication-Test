@@ -1,0 +1,15 @@
+.button-custom {
+    width: 80pt;height: 30pt;
+    background-color: #4CAF50;
+}
+
+.error-message {
+    width: 100%;
+    text-align: center;
+    color: red;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
