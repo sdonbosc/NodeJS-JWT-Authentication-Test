@@ -16,7 +16,7 @@ function login() {
                 localStorage.setItem('jwt', token);
                 document.querySelector('h1.row').innerHTML = 'JWT Home Page';
                 document.querySelector('main').innerHTML = 'LoginSuccessful';
-                //getDashboard();
+                getDashboard();
             }
         }).catch(function (error) {
             document.getElementById('error-message').textContent = "Login Failed, please enter valid credentatials"
@@ -24,7 +24,9 @@ function login() {
         });
 }
 function getDashboard() {
+    if(verifytoken()){
     const token = localStorage.getItem('jwt');
+
     axios.get('/api/dashboard', {
         headers: {
             'Authorization': 'Bearer ' + token
@@ -44,6 +46,7 @@ function getDashboard() {
         id: 'dashboard'
     }, 'Dashboard', '/api/dashboard');
 }
+}
 
 function loadHomePage() {
     axios.get('/dashboardPage')
@@ -57,6 +60,7 @@ function loadHomePage() {
 }
 
 function getSettings() {
+    if(verifytoken()){
     const token = localStorage.getItem('jwt');
     axios.get('/api/settings', {
         headers: {
@@ -65,8 +69,8 @@ function getSettings() {
     }).then(res => {
         console.log('getSettings res')
         if (res && res.data && res.data.success) {
-            document.querySelector('main').innerHTML = res.data.myContent;
-            document.getElementById('Success').textContent = "Settings Page"
+            document.querySelector('h1.row').innerHTML = 'Settings Page';
+            document.getElementById('Success').textContent = "Welcome to Settings Page"
             loadHomePage()
         }
     }).catch(function (error) {
@@ -77,6 +81,33 @@ function getSettings() {
         id: 'settings'
     }, 'Settings', '/api/settings');
 }
+}
+
+const parseJwt = (token) => {
+    try {
+        return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+        return null;
+    }
+};
+
+function verifytoken(){
+    let token = localStorage.getItem('jwt')
+    if (token){
+        let payload = parseJwt(token)
+        if(Date.now() <= payload.exp * 1000){
+            return true
+        }
+        else{
+            localStorage.removeItem('jwt')
+            window.location.href = "/"
+        }
+    }
+}
+setTimeout(()=>{
+    verifytoken()
+}, 190000)
+
 
       // function onLoad() {
       //     const token = localStorage.getItem('jwt');

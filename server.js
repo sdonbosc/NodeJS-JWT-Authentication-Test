@@ -101,7 +101,10 @@ app.get('/api/settings', jwtMW, (req, res) => {
 
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
+    localStorage.removeItem('jwt');
+
     res.status(401).json({
+
       success: false,
       officialError: err,
       err: 'Username or Password is incorrect',
